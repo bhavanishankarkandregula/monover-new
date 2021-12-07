@@ -1,0 +1,102 @@
+*{
+  margin: 0%;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.resting-file{
+  border: 1px solid grey;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.files-rest-area{
+  margin: 10px
+}
+
+.review-header1{
+  border: 1px solid  grey;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+@media only screen and (min-width: 900px) {
+  .fixedBottom {
+    position: relative;
+    width: 35%;
+    height: 100%;
+    overflow: scroll;
+  }
+}
+
+
+
+.c-pointer{
+  cursor: pointer;
+  border-radius: .25rem!important;
+  padding: 10px;
+}
+
+.c-grab {
+  cursor: move; /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.b-card{
+  transition: box-shadow .9s;
+  /* padding: 20px; */
+  border-radius: 4px;
+}
+
+.b-card:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  background-color: rgb(255, 250, 250);
+}
+
+
+.bz-card{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  /* padding: 10px; */
+padding-left: 6px;
+padding-right: 15px;
+  border-radius: 4px;
+}
+
+.bw-card{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+  /* padding: 10px; */
+  /* padding-left: 12px; */
+  border-radius: 5%;
+}
+.b-card{
+  box-shadow: 0 0 11px rgba(33,33,33,.2); 
+   padding: 0px; 
+   border-color: black;
+  padding-left: 0px;
+  border-radius: 0%; 
+  width: 800;
+}
+.hover-visible{
+  display: none;
+}
+
+.hover-visible:hover{
+  display: block;
+}

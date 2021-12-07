@@ -1,0 +1,209 @@
+/* .card-body{
+  padding-top: 1.5rem !important;
+  padding-left: 1.2rem !important;
+  padding-right: 1.2rem !important;
+   */
+  /* border: 1px solid rgb(197, 195, 195); */
+/* } */
+.OrganisationCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.OrganisationCardTop > p {
+  cursor: pointer;
+  font-size: 1.6rem;
+  margin-top: -0.8rem;
+  color: #888888;
+  margin-left: auto;
+
+}
+
+.OrganisationCardTop > p:hover {
+  color: red;
+}
+
+.OrganisationCardTop > i {
+  cursor: pointer;
+  font-weight: bolder;
+  margin-top: -1rem;
+  /* font-size: ; */
+}
+
+.OrganisationCard > img {
+  height: 4rem;
+  width: 5rem;
+  border-radius: 50px;
+  margin-top: -0.9rem;
+}
+
+.cardLayout {
+  border-radius: 3rem;
+  background-color: #f6f6f6;
+  text-align: center;
+  margin: 0.5rem;
+  cursor: pointer;
+  max-width: 13rem;
+  min-width: 13rem;
+  max-height: 13rem;
+  min-height: 13rem;
+}
+
+.title > p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.4rem 0rem;
+}
+
+.subtitle {
+  text-align: center;
+}
+.subtitle > small{
+  font-size: 1rem;
+}
+/* 
+@media (max-width: 800px) {
+  .cardLayout {
+    max-width: 9rem;
+    min-width: 9rem;
+    max-height: 9rem;
+    min-height: 9rem;
+  }
+  .OrganisationCard > img {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+  .title {
+    font-size: ".7rem";
+  }
+  .OrganisationCardTop > p {
+    font-size: 1.2rem;
+  }
+} */
+
+.cardLayout:hover {
+  border: 3px solid #007fff;
+  background-color: #ffffff;
+  /* margin: 3px; */
+}
+
+@media all and (max-width: 960px) and (min-width: 816px) {
+  .cardLayout {
+    border-radius: 2.5rem;
+    max-width: 11rem;
+    min-width: 11rem;
+    max-height: 11rem;
+    min-height: 11rem;
+  }
+  .OrganisationCard > img {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50px;
+    margin-top: -1rem;
+  }
+  .OrganisationCardTop > p {
+    font-size: 1.5rem;
+  }
+  .title > p {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+  .subtitle {
+   margin-top: -0.3rem;
+  }
+}
+
+@media all and (max-width: 816px) and (min-width: 690px) {
+  .cardLayout {
+    border-radius: 2rem;
+    max-width: 9rem;
+    min-width: 9rem;
+    max-height: 9rem;
+    min-height: 9rem;
+  }
+  .OrganisationCard > img {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50px;
+    margin-top: -1rem;
+  }
+  .OrganisationCardTop > p {
+    font-size: 1.3rem;
+  }
+  .title > p {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .subtitle {
+   margin-top: -0.5rem;
+  }
+}
+
+@media all and (max-width: 689.5px) and (min-width: 461px) {
+  .cardLayout {
+    border-radius: 1.5rem;
+    max-width: 8rem;
+    min-width: 8rem;
+    max-height: 8rem;
+    min-height: 8rem;
+  }
+  .OrganisationCard > img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50px;
+    margin-top: -1rem;
+  }
+  .OrganisationCardTop > p {
+    font-size: 1rem;
+  }
+  .title > p {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+  .subtitle {
+   margin-top: -0.5rem;
+  }
+  .subtitle > small{
+    font-size: 0.7rem;
+  }
+}
+
+@media all and (max-width: 460.9px) {
+  .card-body{
+    padding-top: 0.6rem !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .cardLayout {
+    border-radius: 1.2rem;
+    max-width: 8rem;
+    min-width: 8rem;
+    max-height: 8rem;
+    min-height: 8rem;
+  }
+  .OrganisationCard > img {
+    height: 2.3rem;
+    width: 3.3rem;
+    border-radius: 50px;
+    margin-top: -0.5rem;
+  }
+  .OrganisationCardTop > p {
+    font-size: 1.3rem;
+  }
+  .title > p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 13px;
+  }
+  .subtitle {
+   margin-top: -1.1rem;
+  }
+  .subtitle > small{
+    font-size: 0.9rem;
+  }
+}

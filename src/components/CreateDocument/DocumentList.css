@@ -1,0 +1,289 @@
+.IMG {
+  width: 16rem;
+  height: 21rem;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+.dropDown {
+  background-color: #eeeeee;
+  width: 110px;
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  font-size: 14px;
+  padding: 8px 0px 8px 20px;
+  outline: none;
+  text-align: center;
+  /* margin-right: 3rem; */
+}
+
+.dropDown:focus,
+.dropDown:hover {
+  outline: none;
+  border: 1px solid #bbbbbb;
+}
+
+.dropDown option {
+  background-color: #f6f6f6;
+}
+
+.documentButton {
+  display: flex;
+  justify-content: right;
+  margin: 1rem 0rem;
+  align-items: center;
+}
+
+.documentButton > h5 {
+  margin-right: 1rem;
+}
+
+.documentButton > button {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #007fff;
+  background-color: #007ffa;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 300;
+  color: white;
+  transition: box-shadow 0.5s;
+}
+.documentButton > button:hover {
+  /* background-color: #0000FF; */
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.74);
+}
+
+.add {
+  border: 3px solid transparent;
+}
+.add:hover {
+  border: 3px solid #007fff;
+  margin: 3px;
+}
+
+.project {
+  font-weight: 500;
+  margin: 1%;
+  margin-bottom: 0%;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 30px;
+  overflow: hidden;
+  text-align: "center";
+  text-overflow: ellipsis;
+  padding: 1%;
+  height: 162px;
+  width: 162px;
+  min-width: 162px;
+  max-width: 162px;
+  min-height: 162px;
+  max-height: 162px;
+}
+
+.subproject-card {
+  font-weight: 500;
+  margin: 1%;
+  margin-bottom: 0%;
+  cursor: pointer;
+  border-radius: 30px;
+  height: 162px;
+  width: 162px;
+  min-width: 162px;
+  max-width: 162px;
+  min-height: 162px;
+  max-height: 162px;
+  overflow: hidden;
+  padding: 1%;
+  text-align: center;
+  color: #6c8b89;
+  background-color: #e7f5f5;
+}
+
+.projectCard {
+  height: 162px;
+  width: 162px;
+  min-width: 162px;
+  max-width: 162px;
+  min-height: 162px;
+  max-height: 162px;
+  text-align: center;
+}
+
+.projectCard > .iconSize {
+  font-size: 3rem;
+}
+.subproject-card > .iconSize {
+  font-size: 3rem;
+}
+
+.Projectrow {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: center; */
+}
+
+@media all and (max-width: 903px) and (min-width: 792px) {
+  .projectCard {
+    height: 150px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    text-align: center;
+  }
+  .subproject-card {
+    height: 150px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    text-align: center;
+  }
+}
+
+@media all and (max-width: 792px) and (min-width: 576px) {
+  .IMG {
+    width: 10rem;
+    height: 15rem;
+  }
+  .projectCard {
+    height: 130px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    min-height: 130px;
+    max-height: 130px;
+    text-align: center;
+  }
+  .subproject-card {
+    height: 130px;
+    width: 130px;
+    min-width: 130px;
+    max-width: 130px;
+    min-height: 130px;
+    max-height: 130px;
+    text-align: center;
+  }
+}
+
+@media all and (max-width: 575.9px) and (min-width: 461px) {
+  .Title{
+    display: none;
+  }
+  .IMG {
+    /* flex-direction: column; */
+    width: 8rem;
+    height: 10rem;
+    /* justify-content: center; */
+  }
+  .projectCard {
+    height: 125px;
+    width: 125px;
+    min-width: 125px;
+    max-width: 125px;
+    min-height: 125px;
+    max-height: 125px;
+    text-align: center;
+  }
+  .subproject-card {
+    height: 125px;
+    width: 125px;
+    min-width: 125px;
+    max-width: 125px;
+    min-height: 125px;
+    max-height: 125px;
+    text-align: center;
+  }
+}
+
+@media all and (max-width: 460.9px) and (min-width: 370px) {
+  .IMG {
+    /* flex-direction: column; */
+    width: 6rem;
+    height: 8rem;
+    /* justify-content: center; */
+  }
+  .projectCard {
+    height: 120px;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    min-height: 120px;
+    max-height: 120px;
+  }
+
+  .projectCard > .iconSize {
+    font-size: 2rem;
+  }
+  .subproject-card > .iconSize {
+    font-size: 2rem;
+  }
+
+  .subproject-card {
+    height: 120px;
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    min-height: 120px;
+    max-height: 120px;
+    text-align: center;
+  }
+  .Title{
+    display: none;
+  }
+}
+@media all and (max-width: 370px) {
+  .Title{
+    display: none;
+  }
+  .IMG {
+    /* flex-direction: column; */
+    width: 6rem;
+    height: 8rem;
+    /* justify-content: center; */
+  }
+  .projectCard {
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  .subproject-card {
+    height: 100px;
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
+    text-align: center;
+  }
+
+  .projectCard > .iconSize {
+    font-size: 1.5rem;
+  }
+  .subproject-card > .iconSize {
+    font-size: 1.5rem;
+  }
+}
+
+.Title {
+  font-weight: "700";
+  font-size: "35px";
+  margin-left: "-1rem";
+}
+
+@media (min-width: 500px) {
+  .Title{
+    display: none;
+  }
+}
+
+@media(max-width: 500px){
+  .homeTitle{
+    display: none;
+  }
+}

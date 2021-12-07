@@ -1,0 +1,54 @@
+@media all and (max-width: 575.9px) {
+  .FormSection {
+    flex-direction: column;
+  }
+  .FormSection > img {
+    display: none;
+  }
+  .FormDetails {
+    width: 100%;
+  }
+  .Register > .Logo {
+    margin-left: 4%;
+  }
+  .NoAccount {
+    margin: 0rem 2rem;
+  }
+  .ForgetPass {
+    margin: 1rem  0rem 0rem 2rem ;
+  }
+  
+  .FormDetails > .password  {
+    margin: 2% 5%;
+  }
+}
+
+@media all and (max-width: 768px) and (min-width: 576px) {
+  .FormSection {
+    flex-direction: column;
+  }
+  .FormSection > img {
+    display: none;
+  }
+  .FormDetails {
+    width: 100%;
+  }
+  .FormDetails > input {
+    margin: 2% 15%;
+  }
+
+  
+  .Register > .Logo {
+    margin-left: 4%;
+  }
+  .FormDetails > button {
+    margin: 2% 15%;
+  }
+  .NoAccount {
+    margin: 0rem 7rem;
+  }
+  .ForgetPass {
+    margin: 1rem  0rem 0rem 7rem ;
+  }
+  
+}

@@ -1,0 +1,55 @@
+.utility{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+    /* justify-content: space-between; */
+}
+.utility div{
+    margin-right: 1rem;
+    width: 200px;
+    height: 330px;
+    border-radius: 30px;
+    text-align: left;
+    padding: 1.5rem;
+    box-shadow: #eaddf8;
+    margin-bottom: 3rem;
+    position: relative;
+    }
+
+ .utility .image{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+ }   
+
+.utility img{
+    position: absolute;
+    bottom: 1.5rem;
+}    
+
+.utility div p{
+    font-size: 14px;
+}
+
+.utility div span{
+    font-size: 18px;
+}
+
+@media(max-width: 500px){
+    .utility div{
+        width: 32%;
+        height: 160px;
+        border-radius: 15px;
+    }
+    .utility img{
+        width: 50%
+    }
+    .utility div span{
+        font-size: 12px;
+    }
+    .utility div p{
+        font-size: 7px;
+    }
+}

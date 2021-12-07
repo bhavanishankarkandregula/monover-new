@@ -1,0 +1,166 @@
+/* .App {
+  text-align: center;
+  margin-top: .5rem;
+  height: 100vh;
+} */
+
+.home {
+  display: flex;
+}
+
+.sidepanel{
+  position: relative;
+  width: 20%;
+  text-align: left;
+  margin-left: 2rem;
+  border-right: 2px solid rgb(250, 247, 247);
+  margin-top: 15px;
+  overflow: visible;  
+  height: 100vh;
+}
+
+.image{
+  width: 70%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+} 
+
+.space{
+  color:#BEBEC0;
+  font-size: 18px;
+}
+
+
+.list{
+  list-style-type: none;
+  margin-right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.list a{
+  padding: .5rem 1rem .5rem .5rem;
+  margin-bottom: 25px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #BEBEC0;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.list a span{
+  margin-left: .8rem;
+}
+
+.num{
+  color: gray!important;
+  position: absolute;
+  margin-left: 11rem!important;
+}
+
+/* .list a:hover, */
+.list a:active,
+.list a.active{
+  background-color: #B7DBFF;
+  border-radius: 15px;
+  color: black
+}
+
+
+.list a span{
+  padding-left: .5rem;
+}
+
+
+.logout{
+  bottom: 0;
+  position: absolute;
+  padding: .5rem 0rem .5rem .5rem;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: auto;
+left: 0;
+text-align: center;
+display: block;
+ 
+}
+
+/* .logout:hover{
+  background-color: #B7DBFF;
+  border-radius: 15px;
+} */
+
+.main{
+  position: relative; 
+  /* margin: 0 3rem 3rem 3rem; */
+  width: 5%;
+  min-width: 5%;
+ display: flex;
+  flex-direction: column;
+  align-content: center;
+  }
+  .mained{
+    width: 100%;
+    position: relative; 
+     /* margin: 0 1rem 0rem 0rem;  */
+     /* width: 100%; */
+    /* min-width: 10%; */
+    display: flex;
+    flex-direction: column;
+    
+    align-content: center;
+    }
+@media(max-width: 1300px){
+  .main {
+      width:90%;
+  }
+}
+
+.docs{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  font-size: 18px;
+}
+.docs div{
+  width: 15%;
+  border-radius: 30px;
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 41px ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media(max-width: 1300px){
+  .sidepanel {
+      display: none;
+  }
+}
+
+
+@media(min-width: 1300px){
+  .menuIcon {
+      display: none;
+  }
+}
+
+@media(max-width: 500px){
+  .main{
+    margin: 0 18px 18px 18px;
+  }
+
+  .num{
+    margin-left: 12rem!important;
+  }
+ 
+}
+
+@media(max-height: 412px){
+  .list a {
+    margin-bottom: 0;
+  }
+}

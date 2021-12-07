@@ -1,0 +1,127 @@
+/* PROFILE */
+
+@media all and (max-width: 768px) and (min-width: 576px) {
+  .Profile {
+    margin-top: 8%;
+    margin-bottom: 8%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
+  .Profile > img {
+    width: 115px;
+    height: 115px;
+  }
+
+  .Profile > .Admin > .UploadPic {
+    font-size: 11px;
+    padding: 12px 20px;
+  }
+
+  .Admin > .Username > span {
+    font-size: 14px;
+  }
+
+  .Admin > .Username > h2 {
+    font-size: 20px;
+  }
+
+  .Admin > small {
+    font-size: 14px;
+  }
+
+  .Length {
+    margin-top: 13%;
+    margin-right: 10%;
+    margin-left: 10%;
+  }
+
+  .Button {
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-top: 40px;
+    display: flex;
+  }
+
+  .InputField {
+    margin: 14px 0px;
+  }
+  .InputField > .ILabel {
+    font-size: 14px;
+  }
+
+  .InputField > .IInput {
+    font-size: 15px;
+    padding: 8px 14px;
+  }
+
+  .LeftButton {
+    padding: 10px 16px;
+    font-size: 11px;
+  }
+
+  .RightButton {
+    font-size: 11px;
+    padding: 10px 16px;
+  }
+}
+
+@media all and (max-width: 575.9px) {
+  .Profile {
+    display: flex;
+    flex-direction: column;
+    margin: 10% 9%;
+    text-align: center;
+  }
+
+  .Profile > img {
+    width: 105px;
+    height: 105px;
+  }
+
+  .Profile > .Admin{
+    margin-top: 7% ;
+  }
+
+  .Profile > .Admin > .UploadPic {
+    font-size: 10px;
+    width: max-content;
+    border: 2px solid;
+    padding: 12px 20px;
+  }
+
+  .Admin > small{
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .Username{
+    flex-direction: column;
+  }
+
+  .Admin > .Username > span{
+    font-size: 9px;
+    font-weight: 500;
+    color: #b2b2b2;
+    margin-bottom: 0%;
+    text-transform: capitalize;
+  }
+
+  .Length {
+    margin-top: 13%;
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+
+  .InputField > .IInput {
+    padding: 8px 8px;
+  }
+
+  .Button {
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 15%;
+    display: inline-flexbox
+  }
+
+}

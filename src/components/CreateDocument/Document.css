@@ -1,0 +1,25 @@
+.utility{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: .5rem;
+}
+.utility div{
+    width: 200px;
+    height: 200px;
+    border-radius: 30px;
+    text-align: left;
+    padding: 1.5rem;
+    box-shadow: #eaddf8;
+    margin-bottom: 3rem;
+    position: relative;
+    margin-right: 1rem;
+    justify-content: space-between;
+    }
+
+.utility div p{
+    font-size: 14px;
+}
+
+.utility div span{
+    font-size: 18px;
+}

@@ -1,0 +1,41 @@
+.onhover:hover {
+text-decoration: underline;
+}
+.update{
+    visibility:hidden;
+    transition: ease-in 100ms;
+    
+}
+
+.folderCard:hover .update{
+   
+        visibility: visible;
+  
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    overflow:auto;
+  }
+
+  /* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    /* border-radius: 50% */
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(172, 170, 170); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(122, 121, 121); 
+  }
+
+/* rgba(243, 242, 242, 0.932) */
+/* 
+.nhg{
+    background-color: rgba(216, 235, 236, 0.932);
+} */
