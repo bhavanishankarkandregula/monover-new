@@ -17,7 +17,6 @@ import { VscOpenPreview, FiUpload, RiFileSearchLine } from "react-icons/all";
 import { Card } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { AiFillEye, AiOutlineFileJpg, GrDocumentPdf } from "react-icons/all";
-import Select from 'react-select';
 import WordIcon from "../images/word-file.png";
 import TextIcon from "../images/text-file.png";
 import InvalidIcon from "../images/invalid-file.png";
@@ -31,18 +30,10 @@ const Top = () => {
   const dispatch = useDispatch();
   const [joinedOrganisation, setJoinedOrganisation] = useState([]);
   const [ownedOrganisation, setOwnedOrganisation] = useState([]);
-  const [selectedOrgValue, setSelectedOrgValue] = useState();
-  const [selectedOrgLabel, setSelectedOrgLabel] = useState();
-
-
 
   useEffect(() => {
     organisationListAPI();
   }, []);
-
-  useEffect(() => {
-    orgLoad();
-  }, [ownedOrganisation, selectedOrgValue, selectedOrgLabel]);
 
   const document_details = (id) => {
     localStorage["documentId"] = id;
@@ -205,50 +196,7 @@ const Top = () => {
 
   }
 
-  const selectOptions = []
-  const orgLoad = () => {
-    ownedOrganisation.map((org, i) =>{
-        if(localStorage.getItem("orgName"))  {
-            if(org.name === localStorage.getItem("orgName") && !(window.location.href.includes("/Organisation")) ){
-                // selectedOrgValue = org.id
-                // selectedOrgLabel = org.name
-                setSelectedOrgValue(org.id)
-                setSelectedOrgLabel(org.name)
-                alert("OrggggName: "+selectedOrgValue)
-            }else{
-                // selectedOrgValue = org.id
-                // selectedOrgLabel = org.name
-                setSelectedOrgValue(org.id)
-                setSelectedOrgLabel(org.name)
-                
-            }
-            // 
-        }else if(i === 0 && !(window.location.href.includes("/Organisation")) ){
-            // selectedOrgValue = org.id
-            // selectedOrgLabel = org.name
-            setSelectedOrgValue(org.id)
-            setSelectedOrgLabel(org.name)
 
-            
-        }else{
-            // selectedOrgValue = org.id
-            // selectedOrgLabel = org.name  
-            setSelectedOrgValue(org.id)
-            setSelectedOrgLabel(org.name)
-
-        }
-          selectOptions.push({
-              value: org.id,
-              label: org.name
-          })
-      })
-      
-      selectOptions.push({
-          value: 'allOrgs',
-          label: 'All organizations'
-      })
-    
-  }
   return (
     <>
       <div className={classes.top}>
@@ -265,13 +213,57 @@ const Top = () => {
             MONOVER
           </span>
           <div>
-          <Select
-          className={classes.basic_single}
-          classNamePrefix="select"
-          defaultValue={{value: selectedOrgValue, label: selectedOrgLabel}}
-          name="orgination"
-          options={selectOptions}
-        />
+            <select
+              className="select"
+              style={{
+                maxWidth: "200px",
+                paddingLeft: "10px",
+                marginTop: "6px",
+              }}
+              type="select"
+              // value={subprojectId}
+              // name="subprojects"
+              onChange={(e) => {
+                console.log(e.target.value);
+                if (e.target.value === "allOrg") {
+                  window.location.replace("/Organisation");
+                } else {
+                  console.log(ownedOrganisation);
+                  let org = ownedOrganisation.filter(
+                    (org) => Number(org.id) === Number(e.target.value)
+                  );
+                  console.log(org[0].name);
+                  dispatch({
+                    type: "SetOrgName",
+                    orgName: org[0].name,
+                  });
+                  selectedOrganisation(org[0].id, org[0].name);
+                  // selectOrganisationAPI(organisation.id);
+                  membersListAPI();
+                  // window.location.reload();
+                }
+              }}
+            >
+              {ownedOrganisation.map((org, i) =>
+                localStorage.getItem("orgName") ? (
+                  (org.name === localStorage.getItem("orgName") && !(window.location.href.includes("/Organisation")) ) ? (
+                    <option selected value={org.id}>
+                      {org.name}
+                    </option>
+                  ) : (
+                    <option value={org.id}>{org.name}</option>
+                  )
+                ) : (i === 0 && !(window.location.href.includes("/Organisation")) )? (
+                  <option selected value={org.id}>
+                    {org.name}
+                  </option>
+                ) : (
+                  <option value={org.id}>{org.name}</option>
+                )
+              )}
+              <option value="allOrg">All organizations</option>
+              {/* window.location.href.includes("/Organisation") ? <option selected value="allOrg">All organizations</option> : <option value="allOrg">All organizations</option> */}
+            </select>
           </div>
         </div>
 

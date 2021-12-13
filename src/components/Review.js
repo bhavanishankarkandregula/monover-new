@@ -460,6 +460,7 @@ const Review = () => {
                       className="align-items-center"
                       style={{ display: "flex", flexDirection: "row" }}
                     >
+                      <OverlayTrigger placement={"top"} overlay={<Tooltip>Catalog</Tooltip>}>
                       <img
                         src={logo}
                         style={{ cursor: "pointer" }}
@@ -470,6 +471,7 @@ const Review = () => {
                         id={client.id}
                         width="21px"
                       ></img>
+                      </OverlayTrigger>
                       {/* <GrHost size={23} onClick={()=>handlepush()} item='folder' id={client.id} /> */}
 
                       <Share size={23} item="folder" id={client.id} />

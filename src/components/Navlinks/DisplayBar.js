@@ -7,7 +7,7 @@ import { Nav, OverlayTrigger, Tooltip, Modal, ListGroup, Button } from 'react-bo
 import {
   FaFolderOpen, RiUserShared2Line, FaUserCircle,
   AiOutlineCopy, IoTrashOutline,
-  CgFileRemove, TiTickOutline, FaUserAltSlash, CgAddR, GrTemplate
+  CgFileRemove, TiTickOutline, FaUserAltSlash, CgAddR, GrTemplate, FaChevronDown
 } from 'react-icons/all'
 import { IconButton } from "@material-ui/core";
 import Share from '../Share'
@@ -33,6 +33,7 @@ const DisplayBar = (props) => {
   const [additional, setAdditional] = useState('');
   const [sharedDocTitle, setSharedDocTitle] = useState('')
   const [sharedDocFolder, setSharedDocFolder] = useState(null)
+  const [template, setTemplate] = useState('')
 
   //  console.log("Hello", props);
 
@@ -448,6 +449,27 @@ const DisplayBar = (props) => {
             {props.shared ? approveUI() : (
               <Nav.Item>
                 <div className='d-flex flex-row'>
+
+    
+
+                                <div style={{marginLeft:'20px',background:'#dfe4ea',height:'29px',borderRadius:'10px',width:180,marginTop:'10px'}}>
+                                <div>
+                                    {/* <BiSort />
+                                    <BiMenuAltLeft className='mr-2' /> */}
+                                    <select onChange={(event)=>props.changeTemplate(event)} style={{width:140,marginLeft:'8px',marginRight:'0px',marginTop: '20px',WebkitAppearance:'none',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:'bold',marginTop:'1px',borderRadius:'9px'}}>
+                                    <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
+                                    <option style={{marginLeft:'28px'}} hidden value="">Select Template</option>
+                                      
+                                    {props.templateList && props.templateList.map((template) =>(
+                                        <option style={{width:50,maxWidth:30}} value={template.id}>{template.document_name}</option>
+                                      ) )}
+
+                                        </select>
+                                   
+                                     <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
+                                </div>
+                            </div>                
+
                 <Link
                     to={`/useastemplateimage2/${props.documentId}`}
                   >

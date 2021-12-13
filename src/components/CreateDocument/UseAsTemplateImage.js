@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Col, Row } from "react-bootstrap";
 import { useRef } from "react";
 import ClientModal from "./ClientModel5";
+import { Spinner } from "reactstrap";
 
 // import preprocessImage from './Preprocess';
 import Tesseract from "tesseract.js";
@@ -39,7 +40,7 @@ const UseAsTemplateImage = ({ match }) => {
   const [modal, setModal] = useState(false);
   const [modaled, setModaled] = useState(false);
   const [entries, setEntries] = useState([]);
-
+  const [is_doc_loading, set_doc_loading] = useState(true);
   //   changes---
   //   const labels = modaled ? ["V"] : ["L"];
   const [toggleAdvance, settoggleAdvance] = useState(false);
@@ -76,6 +77,27 @@ const UseAsTemplateImage = ({ match }) => {
   //   "dsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
   //   imagePath
   // );
+
+  const handleDocumntContent = (index, event,key) => {
+    const { name, value } = event.target;
+const v=event.target.value
+console.log(v)
+console.log(key)
+    let newArr = [...docForm];
+
+    newArr[index][1] = value;
+
+    setDocForm(newArr);
+    // setDocContents((prevData) => {
+    //   return {
+    //     ...prevData,
+    //     [name]: value,
+    //   };
+    // });
+    // setObjectData({ document_content: JSON.stringify(docContents) });
+    // console.log("OBJECTDATA",objectData)
+  };
+
 
   const handleClick = async () => {
     var formData = new FormData();
@@ -136,6 +158,7 @@ const UseAsTemplateImage = ({ match }) => {
   const toggle = () => setModal(!modal);
   const toggl = () => setModaled(!modaled);
   async function documentDetailsApi() {
+    set_doc_loading(true);
     await axios
       .get(url + `/api/document/${docId}/`, {
         headers: {
@@ -148,10 +171,13 @@ const UseAsTemplateImage = ({ match }) => {
         console.log("res", res);
         setDocForm(Object.entries(res.data.document_content.SummaryFields));
         setDocName(res.data.document_name);
+        set_doc_loading(false);
       })
       .catch((err) => {
         console.log(err);
+        set_doc_loading(false);
       });
+      
   }
 
   useEffect(() => {
@@ -174,6 +200,47 @@ const UseAsTemplateImage = ({ match }) => {
     setField(newArr);
     // console.log("fields",field)
   };
+
+
+  async function addAsTemplateApi() {
+    
+    // alert("Add As Template")
+    // console.log("TOOOOKEN:",token)
+    // console.log("DOCID:",docId)
+    await axios
+      .patch(
+        url + `/api/document/${docId}/`,
+        {
+          "is_template":1,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log("PATCH RESPONSE", res.data);
+        // alert("Form updated successfully");
+        // setMsg("Form updated successfully");
+        toast.success("This Form is Successfully added as Template", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      })
+      .catch((err) => {
+        console.log("patch req err", err);
+        setMsg("Form Could not add as template");
+      });
+  }
+
+
+
+
+
   async function documentUpdate2Api() {
     // console.log(combineArray);
     // console.log(apiGod.data.document_content.SummaryFields);
@@ -333,8 +400,26 @@ const UseAsTemplateImage = ({ match }) => {
         <button onClick={handleClick} style={{height:50}}>Convert to text</button>
       </main>
     </div> */}
-
-        <div className="ml-5 mt-2">
+        {is_doc_loading ? (
+          <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "15vw",
+            marginBottom: "15vw",
+          }}
+        >
+          <Spinner
+            animation="border"
+            style={{ fontSize: "20px" }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+          <h3 style={{ marginLeft: "20px" }}>Loading...</h3>
+        </div>
+        ) :(
+          <div className="ml-5 mt-2">
           <div className="mb-4 p-2 shadow border rounded d-flex flex-row align-items-center  mr-5">
             <>
               <IconButton
@@ -468,8 +553,8 @@ const UseAsTemplateImage = ({ match }) => {
                             type="text"
                             name={value}
                             value={value}
-                            key={value}
-                            
+                            // key={value}
+                            onChange={(e) => handleDocumntContent(index, e,key)}
                           ></input>
                           {/* <IconButton
                             style={{ marginLeft: "25px" }}
@@ -585,7 +670,21 @@ const UseAsTemplateImage = ({ match }) => {
                   
                   </>
                 )}
-
+                <Button
+                      onClick={() => {
+                        addAsTemplateApi();
+                      }}
+                      className="mt-5"
+                      style={{
+                        marginLeft: '5px',
+                        borderRadius: "12px",
+                        fontSize: " 16px",
+                        padding: "10px 24px",
+                        width: "85%",
+                      }}
+                    >
+                      Add As Template
+                    </Button>
 
                 
               </div>
@@ -602,6 +701,9 @@ const UseAsTemplateImage = ({ match }) => {
                          </div> */}
           </Row>
         </div>
+
+        )}
+        
       </div>
       <DocumentDetailsModal
         toggle={toggle}

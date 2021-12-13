@@ -5,6 +5,7 @@ import ScreenTop from "./mobileComp/ScreenTop";
 import Loader from './Loader'
 import FilePreview from "./DragAndDrop/FilePreview2";
 import Top from "./Top";
+import "./Top.css";
 import { useHistory } from "react-router";
 import {
     Container,
@@ -912,9 +913,8 @@ console.log("clients",client)
                                 <div>
                                     {/* <BiSort />
                                     <BiMenuAltLeft className='mr-2' /> */}
-                                    <select onChange={(event)=>sethandle(event)} style={{width:140,marginLeft:'8px',marginRight:'0px',WebkitAppearance:'none',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:'bold',marginTop:'1px',borderRadius:'9px'}}>
-                                    <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
-                                    <option style={{marginLeft:'28px'}} hidden value="">Select Costomer</option>
+                                    <select onChange={(event)=>sethandle(event)} style={{marginLeft:'8px',marginRight:'8px',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:'bold',marginTop:'1px',borderRadius:'9px'}}>
+                                    <option style={{marginLeft:'28px'}} hidden value="">Select Costomer &nbsp;&nbsp;&nbsp;&nbsp;</option>
                                       
                                       {client.map((cli)=>(
                                        <option style={{width:50,maxWidth:30}} value={cli.id}>{cli. project_name}</option>
@@ -924,7 +924,6 @@ console.log("clients",client)
                                         <option>Size</option> */}
                                         </select>
                                    
-                                     <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
                                 </div>
                             </div> 
 {/* <h5 style={{marginLeft:'20px',marginTop:'5px',background:'#dfe4ea',fontWeight:500,borderRadius:'8px',width:'183px',height:'28px'}}><b style={{marginLeft:'9px',fontWeight:500}}>Star Clients Pricing</b></h5> */}

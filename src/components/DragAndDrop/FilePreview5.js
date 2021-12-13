@@ -149,7 +149,7 @@ console.log("filesffffffil",file)
           style={{ cursor: "pointer",marginRight:'8px',width:'19px' }}
           onClick={(e) => {
             setLink(filePath);
-            openModal(e);
+            props.deletedeal(file.id);
           }} />
       <TiArrowForward     fontSize="21px"
           className=""

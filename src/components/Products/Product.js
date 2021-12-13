@@ -198,7 +198,7 @@ const Product = ({ product, getProducts }) => {
         <Modal.Footer>
           {action === "delete" ? (
             <>
-              <Button variant="secondary">No</Button>
+              <Button variant="secondary" onClick={handleClose}>No</Button>
               <Button
                 onClick={() => deleteProduct(product.id)}
                 variant="primary"
@@ -208,7 +208,7 @@ const Product = ({ product, getProducts }) => {
             </>
           ) : (
             <>
-              <Button variant="secondary">Close</Button>
+              <Button variant="secondary" onClick={handleClose}>Close</Button>
               <Button
                 onClick={() => updateProduct(product.id)}
                 variant="primary"

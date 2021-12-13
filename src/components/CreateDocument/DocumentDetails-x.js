@@ -76,9 +76,7 @@ const DocumentDetails = (props) => {
   const [zoom, setZoom] = useState(false);
   const [docForm, setDocForm] = useState(null);
   const [changeField, setChangeField] = useState(null);
-  const [templates, setTemplates] = useState(null);
   useEffect(() => {
-    documentDetailsApi3()
     if (idArray.includes(Number(params.document_id))) {
       setShowPrevNextButtons(true);
     } else {
@@ -86,66 +84,6 @@ const DocumentDetails = (props) => {
     }
   });
 
-
-  async function selectThisTemplate(e) {
-    // console.log("Entered select this templateeeeeeeee")
-    
-    await axios
-      .post(
-        url + `/api/document-as-template/`,
-        {
-          "is_template_True_id": documentId,
-          "current_document_id": e.target.value
-      },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        console.log("PATCH RESPONSEeeeeeeeeeeeeeeeee:", res.data);
-       
-      })
-      .catch((err) => {
-        console.log("patch req err", err);
-        setMsg("Form Could not add as template");
-      });
-  }
-
-
-  const getTemplates= async () => {
-    await axios
-      .get(url + `/api/document-is-template/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        setTemplates(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  useEffect(() => {
-    getTemplates();
-  }, []);
-
-
-  async function documentDetailsApi3() {
-    await axios
-      .get(url + `/api/document/${documentId}/`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        setapiGod(res);
-        
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
   const [formArray, setFormArray] = useState([]);
   const docArray = [];
   let boxArray = [];
@@ -187,10 +125,10 @@ const DocumentDetails = (props) => {
       })
       .then((res) => {
         const myDoc = res.data;
-        // console.log(
-        //   "docdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        //   myDoc
-        // );
+        console.log(
+          "docdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          myDoc
+        );
         if (myDoc.document_content?.ExpenseDocuments) {
           for (
             let i = 0;
@@ -277,7 +215,7 @@ const DocumentDetails = (props) => {
         } else {
           setDocForm(Object.entries(myDoc.document_content));
         }
-        // console.log("ccccc", typeof myDoc.document_content);
+        console.log("ccccc", typeof myDoc.document_content);
         setMyDoc(res.data);
         set_doc_loading(false);
         setImagePath(res.data.file);
@@ -299,8 +237,7 @@ const DocumentDetails = (props) => {
       });
   }
 
-
-  // console.log("summaryfields", docForm);
+  console.log("summaryfields", docForm);
   const getProducts = () => {
     fetch(`${url}/api/createProducts`).then((res) => {
       return res.json().then((data) => {
@@ -312,13 +249,6 @@ const DocumentDetails = (props) => {
   useEffect(() => {
     getProducts();
   }, []);
-
-  const deleteThisField = (key) => {
-    // alert( key)
-    setDocForm(
-      docForm.filter((t,i) => t[i] !== key)
-    )
-  }
 
   const createProducts = (p) => {
     var bodyFormData = new FormData();
@@ -333,9 +263,9 @@ const DocumentDetails = (props) => {
     })
       .then((res) => {
         return res.json().then((data) => {
-          // console.log(data);
+          console.log(data);
           toast.success("Product created!");
-          // console.log(price, p.name, p.stock);
+          console.log(price, p.name, p.stock);
         });
       })
       .catch((err) => {
@@ -503,52 +433,14 @@ const DocumentDetails = (props) => {
         // alert("Doc name edit Error !");
       });
   }
-  const [apiGod, setapiGod] = useState(null);
-  // const docId = match.params.id;
 
-  const [combineArray, setcombineArray] = useState([]);
-  const [entries, setEntries] = useState([]);
-  async function updateDocumentApi2() {
-  //  console.log("formarray",formArray);
-    // console.log(apiGod.data.document_content.SummaryFields);
-    let arrPush = {};
-    docForm.map((elem) => {
-      let keysArr = [elem[0]];
-      let valuesArr = [elem[1]];
-      let result = Object.assign.apply(
-        {},
-        keysArr.map((v, i) => ({ [v]: valuesArr[i] }))
-      );
-      arrPush = { ...arrPush, ...result };
-    });
-    // console.log("arr",arrPush);
-   
-    apiGod.data.document_content.SummaryFields = arrPush;
-    // console.log(apiGod.data.document_content);
-    await axios
-      .patch(
-        url + `/api/document/${documentId}/`,
-        { document_content: apiGod.data.document_content, document_entries: entries },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        console.log("PATCH RESPONSE", res);
-       
-      })
-      .catch((err) => {
-        console.log("patch req err", err);
-        setMsg("Form Not updated");
-      });
-  }
   async function updateDocumentApi() {
     console.log("Doc", formArray);
 
     console.log("OBJECTDATA", docForm);
-    // console.log(
-    //   JSON.stringify({ document_content: formArray, SummaryFields: docForm })
-    // );
+    console.log(
+      JSON.stringify({ document_content: formArray, SummaryFields: docForm })
+    );
     await axios
       .patch(
         url + `/api/document/${documentId}/`,
@@ -558,7 +450,7 @@ const DocumentDetails = (props) => {
         }
       )
       .then((res) => {
-        // console.log("PATCH RESPONSE", res);
+        console.log("PATCH RESPONSE", res);
         setMsg("Form updated successfully");
       })
       .catch((err) => {
@@ -595,16 +487,16 @@ const DocumentDetails = (props) => {
     setObjectData({ document_content: JSON.stringify(docContents) });
   };
 
-  const handleDocumntContent = (index, event,key) => {
+  const handleDocumntContent = (index, event, key) => {
     const { name, value } = event.target;
-const v=event.target.value
-// console.log(v)
-// console.log(key)
+    console.log("Bhavani",key)
+    console.log("Sankar", event.target.value)
     let newArr = [...docForm];
 
     newArr[index][1] = value;
 
     setDocForm(newArr);
+    
     // setDocContents((prevData) => {
     //   return {
     //     ...prevData,
@@ -630,7 +522,7 @@ const v=event.target.value
           },
         })
         .then((res) => {
-          // console.log("ProjectList", res.data);
+          console.log("ProjectList", res.data);
           setProjectData(res.data);
 
           // if (projectId === "") {
@@ -661,7 +553,7 @@ const v=event.target.value
           },
         })
         .then((res) => {
-          // console.log("subprojectList", res.data);
+          console.log("subprojectList", res.data);
           setSubProjectData(res.data);
           setSubProjectId(res.data[0].id);
 
@@ -694,7 +586,7 @@ const v=event.target.value
   };
 
   const moveApi = async () => {
-    // console.log("yesssssssss", subprojectId);
+    console.log("yesssssssss", subprojectId);
     await axios
       .post(
         `${url}/api/move/document/`,
@@ -780,14 +672,14 @@ const v=event.target.value
       (await axios
         .get(`${url}/api/export/${documentId}/${index}/csv/`)
         .then((res) => {
-        
+          // console.log(res.data);
           saveAs(
             `${url}/api/export/${documentId}/${index}/csv`,
             `form-${index + 1}.csv`
           );
         })
         .catch((e) => {
-        
+          alert(e.message);
         }));
   }
   async function ExportToXLS(index) {
@@ -795,7 +687,7 @@ const v=event.target.value
       (await axios
         .get(`${url}/api/export/${documentId}/${index}/xls/`)
         .then((res) => {
-          // console.log(res;
+          // console.log(res.data);
           saveAs(
             `${url}/api/export/${documentId}/${index}/xls`,
             `form-${index + 1}.xls`
@@ -804,7 +696,7 @@ const v=event.target.value
         .catch((e) => {
           setMsg(e.message);
           setCommonModal(true);
-        
+          // alert(e.message);
         }));
   }
 
@@ -850,8 +742,6 @@ const v=event.target.value
           numShared={sharedDoc.no_of_shared}
           numApproved={sharedDoc.no_of_approved}
           sharedDetails={sharedDoc.shared_by_details}
-          templateList={templates}
-          changeTemplate={selectThisTemplate}
         />
       ) : (
         <DisplayBar
@@ -873,8 +763,6 @@ const v=event.target.value
           folderName={folderName}
           unregistredUsers={myDoc.shared_to_unregister_user}
           imagePath={imagePath}
-          templateList={templates}
-          changeTemplate={selectThisTemplate}
         />
       )}
       <div>
@@ -1244,21 +1132,17 @@ const v=event.target.value
                             type="text"
                             name={value}
                             value={value}
-                          //  key={value}
-                            onChange={(e) => handleDocumntContent(index, e,key)}
+                            // key={value}
+                            onChange={(e) => handleDocumntContent(index, e, key)}
                           ></input>
                           <IconButton
                             style={{ marginLeft: "25px" }}
-                            onClick={() =>{
-
+                            onClick={() =>
                               setDocForm(
                                 docForm.filter((t, i) => t[i] !== key)
                               )
-                            
-                            }
                             }
                           >
-                            {/* shankar */}
                             <FaTimes color="red" />
                           </IconButton>
                         </Col>
@@ -1341,7 +1225,7 @@ const v=event.target.value
                 <Button
                   className="w-100 mb-2"
                   onClick={() => {
-                    updateDocumentApi2();
+                    updateDocumentApi();
                     commonToggle();
                   }}
                 >

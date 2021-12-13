@@ -288,3 +288,8 @@ button {
     transform: rotate(-45deg);
   }
 }
+
+.basic_single{
+  width: 250px;
+  margin-top: 15px;
+}

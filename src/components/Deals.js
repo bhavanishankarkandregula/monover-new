@@ -43,7 +43,41 @@ const Deals = ({ match }) => {
 // const [token,setToken]=useState("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjM0ODQwODUxLCJqdGkiOiJjYjM1YzA5ZjBhMzY0MzgyYTJkNzg5NGZkZDdlMjMyYSIsInVzZXJfaWQiOjN9.4MrNUeXMoQCLexQhLNo3WU3MO3HUWoD6hPykGETZBHs")
 var history=useHistory()
 
+
+
+
 // console.log("projectiddddddddddddddddddddddddddddddddddddddddd",match.history)
+
+const deleteDeal = async (dealId) => {
+    setLoading(true)
+    await axios
+      .delete(
+        url + `/api/document/${dealId}/`,
+        {
+          
+        },
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      )
+      .then((res) => {
+        console.log("PATCH RESPONSE", res.data);
+        fetchDeals()
+       
+      })
+      .catch((err) => {
+        console.log("patch req err", err);
+      });
+    //   alert("Deai ID: "+ dealId)
+      setLoading(false)
+
+
+}
+
+
+
+
+
 // alert(projectId)
     const fetchDeals = async () => {
         setLoading(true)
@@ -174,7 +208,9 @@ console.log("ttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytt",nam
                                     
                                     <div className='align-items-center' style={{display:'flex',flexDirection:'row'}}>
                                            {/* <AiOutlineFileZip size={23} item='folder'  /> */}
+                                           <OverlayTrigger placement={"top"} overlay={<Tooltip>Catalog</Tooltip>}>
                                            <img src={logo} style={{cursor:'pointer'}}  width='21px'></img>
+                                           </OverlayTrigger>
                                             <Share size={23} item='folder'  />
                                             <SiMicrosoftexcel size={23} item='folder' />
                                         </div>
@@ -194,7 +230,7 @@ console.log("ttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytt",nam
                                            <div style={{marginBottom:'22px',flex: 1}}>
                                                  
 
-                                                        <FilePreview file={doc}   />
+                                                        <FilePreview file={doc} deletedeal={deleteDeal}  />
                                                  
                                                    
                                                 

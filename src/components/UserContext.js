@@ -31,6 +31,7 @@ export const UserProvider = (props) => {
         .then((res) => {
           // console.log("res", res.data);
           setUserData(res.data)
+          // console.log("Landing Data",res.data)
           res.data.profile_picture !== null &&
             localStorage.setItem("pic", res.data.profile_picture)
         })

@@ -151,8 +151,8 @@ const Products = () => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary">Cancel</Button>
-          <Button onClick={addProducts} variant="primary">
+          <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+          <Button onClick={addProducts} disabled="true" variant="primary">
             Create
           </Button>
         </Modal.Footer>
