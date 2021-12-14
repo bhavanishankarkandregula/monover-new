@@ -32,6 +32,8 @@ import Share from "./Share";
 import SubprojectModal from './DragAndDrop/subprojectModal'
 import { useHistory } from "react-router";
 import logo from '../images/landing/icon.svg' ;
+import Select from 'react-select';
+
 const Deals = ({ match }) => {
     const projectId = match.params.id
     const [deals, setDeals] = useState([])
@@ -125,6 +127,11 @@ console.log("ttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytt",nam
         setSubProjectModal(!subProjectModal);
     };
 
+    const mostRecentOptions = []
+    mostRecentOptions.push({value: 1, label: 'Date'})
+    mostRecentOptions.push({value: 2, label: 'Size'})
+      
+
     return (
         <>
       <div  className='mained'>
@@ -178,15 +185,13 @@ console.log("ttttttttttttttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyytt",nam
                             <div className='d-flex flex-end'style={{borderRadius:'5px'}}>
                                 <div style={{ fontWeight: 'bold',borderRadius:'8px', background: 'lightgray', marginLeft: 'auto',height:'28px',width:'158px' }}>
                                    <div style={{marginTop:'0px'}}>
-                                    <BiSort />
-                                    <BiMenuAltLeft className='' />
-                                    <select style={{marginLeft:'6px',marginRight:'6px',fontSize:'13px',borderRadius:'10px',background:'lightgray',borderColor:'lightgray',fontWeight:700,WebkitAppearance:'none'}}>
-                                        <option>Most Recent</option>
-                                        <option>Date</option>
-                                        <option>Size</option>
-                                        </select>
-                                    {/* Most Recent */}
-                                    <FaChevronDown className='ml-2' />
+                                   <Select
+                                        classNamePrefix="select"
+                                        defaultValue={{value: "0", label:"Most Recent"}}
+                                        name="most_recent_deals"
+                                        options={mostRecentOptions}
+                                        onChange={(e) => console.log("Most Recent: " + e.value)}
+                                    />
                                 </div>
                                 </div>
                             </div>

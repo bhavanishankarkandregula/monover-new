@@ -1,6 +1,6 @@
 //const url = "http://34.93.209.224:8000"
 const url = "http://3.140.210.76:8000"; //previous url
-// const url="https://05e8-2409-4064-4e80-5d53-7c68-750c-b869-92de.ngrok.io";
+// const url="https://2f1f-2409-4064-4e12-a32f-f0c9-fe24-dbd7-a808.ngrok.io";
 
 // const url = "http://118e-2405-201-5507-30a6-c457-2472-fa1e-38f4.ngrok.io";
 // const url = "http://fa40-2405-201-5507-30a6-c457-2472-fa1e-38f4.ngrok.io";

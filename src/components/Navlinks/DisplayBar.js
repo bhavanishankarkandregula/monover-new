@@ -12,6 +12,8 @@ import {
 import { IconButton } from "@material-ui/core";
 import Share from '../Share'
 import { Link } from 'react-router-dom'
+import Select from 'react-select';
+
 
 
 const DisplayBar = (props) => {
@@ -376,6 +378,29 @@ const DisplayBar = (props) => {
     }
   }
 
+
+  const templateOptions = []
+  let initialTemplate = null
+  const { templateList } = props
+  if(templateList){
+  templateList.map((template, i) =>{
+    templateOptions.push({
+      value: template.id,
+      label: template.document_name
+    })
+    if(props.connectedTemplate!==0)
+    {
+      if(props.connectedTemplate===template.id){
+        initialTemplate = {
+          value: template.id,
+          label: template.document_name
+        }
+      }
+    }
+  })
+}
+
+
   return (
     <>
       <ToastContainer />
@@ -452,21 +477,16 @@ const DisplayBar = (props) => {
 
     
 
-                                <div style={{marginLeft:'20px',background:'#dfe4ea',height:'29px',borderRadius:'10px',width:180,marginTop:'10px'}}>
+                                <div style={{marginLeft:'20px',background:'#dfe4ea',height:'29px',borderRadius:'10px',width:180,marginTop:'5px'}}>
                                 <div>
-                                    {/* <BiSort />
-                                    <BiMenuAltLeft className='mr-2' /> */}
-                                    <select onChange={(event)=>props.changeTemplate(event)} style={{width:140,marginLeft:'8px',marginRight:'0px',marginTop: '20px',WebkitAppearance:'none',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:'bold',marginTop:'1px',borderRadius:'9px'}}>
-                                    <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
-                                    <option style={{marginLeft:'28px'}} hidden value="">Select Template</option>
-                                      
-                                    {props.templateList && props.templateList.map((template) =>(
-                                        <option style={{width:50,maxWidth:30}} value={template.id}>{template.document_name}</option>
-                                      ) )}
+                                  <Select
+                                      classNamePrefix="select"
+                                      defaultValue={initialTemplate ? initialTemplate: {value: 0, label: "Select Template"}}
+                                      name="selectTemplate"
+                                      options={templateOptions}
+                                      onChange={(e)=>props.changeTemplate(e)}
+                                  />
 
-                                        </select>
-                                   
-                                     <FaChevronDown style={{marginLeft:'2px'}} className='ml-2' />
                                 </div>
                             </div>                
 

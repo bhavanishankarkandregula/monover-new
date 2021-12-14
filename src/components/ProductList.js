@@ -22,7 +22,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import CommonModal1 from "./Products/comman"
 import CommonModal2 from "./Products/comman1"
 import CommonModal3 from "./Products/comman2"
-import { Input,Select } from "@material-ui/core";
+import { Input } from "@material-ui/core";
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
 import Product from './Products/CardProduct'
 import { MdAdd } from 'react-icons/all'
@@ -41,6 +41,7 @@ import ClientModal from './comps/ClientModal'
 import { Button,Modal, Form } from 'react-bootstrap'
 import { DeleteOutline } from "@material-ui/icons";
 import CloseIcon from"@material-ui/icons/Close";
+import Select from 'react-select';
 import { useParams } from "react-router";
 const ProductList = ({match}) => {
     var id=match.params.id
@@ -670,7 +671,7 @@ setprice(null)
 const sethandle=async(event)=>{
  // alert(event.target.value)
   // console.log(event.target.value)
-  var v=event.target.value
+  var v=event.value
 // gethandle(v)
 //setProducts(0)
   var clientid=id
@@ -709,6 +710,24 @@ setProducts(data)
       setClient(data)
       // alert(data)
   }
+
+  const mostRecentOptions = []
+  mostRecentOptions.push({value: 1, label: 'Date'})
+  mostRecentOptions.push({value: 2, label: 'Size'})
+
+  const clientOptions = []
+  if(client){
+    client.map((cli, i) =>{
+      clientOptions.push({
+      value: cli.id,
+      label: cli.project_name
+    })
+  })
+}
+
+
+
+
 console.log("clients",client)
     return (
         <div 
@@ -909,20 +928,15 @@ console.log("clients",client)
 <h4 style={{marginLeft:'35px',fontWeight:'bold'}}>Catalog List</h4>
 
 
-<div style={{marginLeft:'20px',background:'#dfe4ea',height:'29px',borderRadius:'10px',width:180,marginTop:'3px'}}>
+<div style={{marginLeft:'20px',background:'#dfe4ea',height:'29px',borderRadius:'10px',width:180,marginTop:'px'}}>
                                 <div>
-                                    {/* <BiSort />
-                                    <BiMenuAltLeft className='mr-2' /> */}
-                                    <select onChange={(event)=>sethandle(event)} style={{marginLeft:'8px',marginRight:'8px',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:'bold',marginTop:'1px',borderRadius:'9px'}}>
-                                    <option style={{marginLeft:'28px'}} hidden value="">Select Costomer &nbsp;&nbsp;&nbsp;&nbsp;</option>
-                                      
-                                      {client.map((cli)=>(
-                                       <option style={{width:50,maxWidth:30}} value={cli.id}>{cli. project_name}</option>
-                                      ))}
-                                     
-                                        {/* <option>Date</option>
-                                        <option>Size</option> */}
-                                        </select>
+                                <Select
+                                      classNamePrefix="select"
+                                      defaultValue={{value: "0", label:"Select Customer"}}
+                                      name="selectCustomer"
+                                      options={clientOptions}
+                                      onChange={(e)=>sethandle(e)}
+                                  />
                                    
                                 </div>
                             </div> 
@@ -930,15 +944,14 @@ console.log("clients",client)
 
 <div style={{ marginLeft: 'auto',background:'#dfe4ea',height:'29px',borderRadius:'10px',marginTop:'3px'}}>
                                 <div>
-                                    <BiSort />
-                                    <BiMenuAltLeft className='mr-2' />
-                                    <select  style={{WebkitAppearance:'none',background:'#dfe4ea',borderColor:'#dfe4ea',fontWeight:500,marginTop:'1px',borderRadius:'9px'}}>
-                                        <option>Most Recent</option>
-                                        <option>Date</option>
-                                        <option>Size</option>
-                                        </select>
-                                   
-                                     <FaChevronDown className='ml-2' />
+                                <Select
+                                    className="prodListRecentSelect"
+                                    classNamePrefix="select"
+                                    defaultValue={{value: "0", label:"Most Recent"}}
+                                    name="most_recent_clients"
+                                    options={mostRecentOptions}
+                                    onChange={(e) => console.log("Most Recent: " + e.value)}
+                                />
                                 </div>
                             </div> 
 

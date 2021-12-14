@@ -32,6 +32,13 @@ const DocumentDetailsModal = (props) => {
     // });
     // console.log({ formLabel: formData });
   }
+  
+  function setValuetoNull() {
+
+    setFormLabel('')
+    setFormData('')
+  }
+
 
   const closeBtn = (
     <button className="close" onClick={props.toggle} style={{ color: "red" }}>
@@ -76,11 +83,15 @@ const DocumentDetailsModal = (props) => {
             onClick={() => {
               props.toggle();
               addInput();
+              setValuetoNull();
             }}
           >
             <strong>&nbsp;Add &nbsp;</strong>
           </Button>
-          <Button color="secondary" onClick={props.toggle}>
+          <Button color="secondary" onClick={() => {
+                props.toggle();
+                setValuetoNull();
+                }}>
             <strong> Cancel</strong>
           </Button>
         </ModalFooter>

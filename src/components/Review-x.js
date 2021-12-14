@@ -11,8 +11,6 @@ import { Container, Tooltip, OverlayTrigger, Row, Col } from "react-bootstrap";
 import Share from "./Share";
 import { Button } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import Select from 'react-select';
-
 import {
   FaChevronDown,
   AiOutlineFileZip,
@@ -100,13 +98,6 @@ const Review = () => {
   // }, [documents]);
 
   console.log("ffffffffffffffffff", clients);
-
-  const mostRecentOptions = []
-  mostRecentOptions.push({value: 1, label: 'Date'})
-  mostRecentOptions.push({value: 2, label: 'Size'})
-
-
-
   return (
     <div className="mained">
       {/* <ForwardRefExoticComponent /> */}
@@ -198,13 +189,26 @@ const Review = () => {
                   }}
                 >
                   <div style={{ marginTop: "0px" }}>
-                  <Select
-                        classNamePrefix="select"
-                        defaultValue={{value: "0", label:"Most Recent"}}
-                        name="most_recent_clients"
-                        options={mostRecentOptions}
-                        onChange={(e) => console.log("Most Recent: " + e.value)}
-                    />
+                    <BiSort />
+                    <BiMenuAltLeft className="" />
+                    <select
+                      style={{
+                        marginLeft: "6px",
+                        marginRight: "6px",
+                        fontSize: "13px",
+                        borderRadius: "10px",
+                        background: "lightgray",
+                        borderColor: "lightgray",
+                        fontWeight: 700,
+                        WebkitAppearance: "none",
+                      }}
+                    >
+                      <option>Most Recent</option>
+                      <option>Date</option>
+                      <option>Size</option>
+                    </select>
+                    {/* Most Recent */}
+                    <FaChevronDown className="ml-2" />
                   </div>
                 </div>
               </div>

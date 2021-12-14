@@ -77,6 +77,7 @@ const DocumentDetails = (props) => {
   const [docForm, setDocForm] = useState(null);
   const [changeField, setChangeField] = useState(null);
   const [templates, setTemplates] = useState(null);
+  const [thisTemplate, setThisTemplate] = useState(null);
   useEffect(() => {
     documentDetailsApi3()
     if (idArray.includes(Number(params.document_id))) {
@@ -95,7 +96,7 @@ const DocumentDetails = (props) => {
         url + `/api/document-as-template/`,
         {
           "is_template_True_id": documentId,
-          "current_document_id": e.target.value
+          "current_document_id": e.value
       },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -103,7 +104,9 @@ const DocumentDetails = (props) => {
       )
       .then((res) => {
         console.log("PATCH RESPONSEeeeeeeeeeeeeeeeee:", res.data);
-       
+        setMsg("Form has been added as template");
+        // documentDetailsApi()
+
       })
       .catch((err) => {
         console.log("patch req err", err);
@@ -140,7 +143,8 @@ const DocumentDetails = (props) => {
       })
       .then((res) => {
         setapiGod(res);
-        
+        // used_template_id
+        // alert(res.data.used_template_id)
       })
       .catch((err) => {
         console.log(err);
@@ -187,6 +191,8 @@ const DocumentDetails = (props) => {
       })
       .then((res) => {
         const myDoc = res.data;
+        console.log("WelcomeTemplate: "+res.data.used_template_id);
+        setThisTemplate(res.data.used_template_id)
         // console.log(
         //   "docdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         //   myDoc
@@ -322,11 +328,15 @@ const DocumentDetails = (props) => {
 
   const createProducts = (p) => {
     var bodyFormData = new FormData();
-    const price = Number(p.price.split("$")[1]);
+    // let price
+    // if(p.price){
+    //   price = Number(p.price.split("$")[1]);
+    // }
+    console.log("PRRRRRRRRRRIIICCEE:",p.price)
     bodyFormData.append("name", p.name);
     bodyFormData.append("product_number", Math.floor(Math.random() * 15));
     bodyFormData.append("stock", Number(p.stock));
-    bodyFormData.append("price", price);
+    bodyFormData.append("price", p.price);
     fetch(`${url}/api/createProducts/`, {
       method: "POST",
       body: bodyFormData,
@@ -340,7 +350,7 @@ const DocumentDetails = (props) => {
       })
       .catch((err) => {
         console.log(err);
-        console.log(price, p.name, p.stock);
+        console.log(p.price, p.name, p.stock);
       });
   };
 
@@ -535,7 +545,7 @@ const DocumentDetails = (props) => {
       )
       .then((res) => {
         console.log("PATCH RESPONSE", res);
-       
+        setMsg("Form has been saved!");
       })
       .catch((err) => {
         console.log("patch req err", err);
@@ -559,7 +569,7 @@ const DocumentDetails = (props) => {
       )
       .then((res) => {
         // console.log("PATCH RESPONSE", res);
-        setMsg("Form updated successfully");
+        setMsg("Form has been updated successfully");
       })
       .catch((err) => {
         console.log(err);
@@ -852,6 +862,7 @@ const v=event.target.value
           sharedDetails={sharedDoc.shared_by_details}
           templateList={templates}
           changeTemplate={selectThisTemplate}
+          connectedTemplate={thisTemplate}
         />
       ) : (
         <DisplayBar
@@ -875,6 +886,7 @@ const v=event.target.value
           imagePath={imagePath}
           templateList={templates}
           changeTemplate={selectThisTemplate}
+          connectedTemplate={thisTemplate}
         />
       )}
       <div>
@@ -1138,7 +1150,7 @@ const v=event.target.value
                           className="ok"
                           onClick={action === "move" ? moveApi : copyApi}
                         >
-                          Ok
+                          Okkkkk
                         </Button>
                       </Modal.Footer>
                     </Modal>
@@ -1378,7 +1390,7 @@ const v=event.target.value
         index={docIndex}
         setDocContents={setDocForm}
       />
-      <CommonModal modal={commonModal} toggle={commonToggle} msg={msg} />
+      {msg && <CommonModal modal={commonModal} toggle={commonToggle} msg={msg} />}
       <Modal size="lg" show={showProducts} onHide={handleCloseProducts}>
         <Modal.Header closeButton>
           <Modal.Title>Choose a Product</Modal.Title>

@@ -272,31 +272,31 @@ const Top = () => {
           </span>
           <div>
           <Select
-            className={classes.basic_single_sitetop}
-            classNamePrefix="select"
-            defaultValue={{value: "0", label: (window.location.href.includes("/Organisation")) ? "All Organisations" : localStorage.getItem("orgName")}}
-            name="orgination"
-            onChange={(e) => {
-                console.log(e.value);
-                if (e.value === "allOrg") {
-                window.location.replace("/Organisation");
-                } else {
-                console.log(ownedOrganisation);
-                let org = ownedOrganisation.filter(
-                    (org) => Number(org.id) === Number(e.value)
-                );
-                console.log(org[0]?.name);
-                dispatch({
-                    type: "SetOrgName",
-                    orgName: org[0]?.name,
-                });
-                selectedOrganisation(org[0]?.id, org[0]?.name);
-                // selectOrganisationAPI(organisation.id);
-                membersListAPI();
-                // window.location.reload();
-                }
-            }}
-            options={selectOptions}
+          className={classes.basic_single}
+          classNamePrefix="select"
+          defaultValue={{value: selectedOrgValue, label: selectedOrgLabel}}
+          name="orgination"
+          onChange={(e) => {
+            console.log(e.value);
+            if (e.value === "allOrg") {
+              window.location.replace("/Organisation");
+            } else {
+              console.log(ownedOrganisation);
+              let org = ownedOrganisation.filter(
+                (org) => Number(org.id) === Number(e.value)
+              );
+              console.log(org[0]?.name);
+              dispatch({
+                type: "SetOrgName",
+                orgName: org[0]?.name,
+              });
+              selectedOrganisation(org[0]?.id, org[0]?.name);
+              // selectOrganisationAPI(organisation.id);
+              membersListAPI();
+              // window.location.reload();
+            }
+          }}
+          options={selectOptions}
         />
           </div>
         </div>
