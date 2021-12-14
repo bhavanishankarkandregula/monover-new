@@ -162,6 +162,7 @@ const AnnotateImage = ({ match }) => {
     let newArr = [...fields];
     newArr[index][1] = event.target.value;
     setFields(newArr);
+    alert("Saved")
 
     // docForm.push(fields)
   };
@@ -236,6 +237,7 @@ const AnnotateImage = ({ match }) => {
       )
       .then((res) => {
         console.log("PATCH RESPONSE", res);
+        console.log("SAAAAAAAAAAAAAAAAAVE:")
         // alert("Form updated successfully");
         // setMsg("Form updated successfully");
       })
