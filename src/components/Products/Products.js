@@ -13,12 +13,14 @@ const Products = () => {
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
   const [image, setImage] = useState(null);
+  const [muteAddProduct, setMuteAddProduct] = useState(false)
 
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
   };
   const handleShow = () => {
+    setMuteAddProduct(false)
     setShow(true);
   };
 
@@ -35,6 +37,7 @@ const Products = () => {
   }, []);
 
   const addProducts = () => {
+    setMuteAddProduct(true)
     var bodyFormData = new FormData();
     bodyFormData.append("name", name);
     bodyFormData.append("product_number", productNumber);
@@ -152,7 +155,7 @@ const Products = () => {
 
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>Cancel</Button>
-          <Button onClick={addProducts} disabled="true" variant="primary">
+          <Button onClick={addProducts} disabled={muteAddProduct}  variant="primary">
             Create
           </Button>
         </Modal.Footer>

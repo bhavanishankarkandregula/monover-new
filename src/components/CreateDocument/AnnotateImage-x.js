@@ -3,7 +3,7 @@ import axios from "axios";
 import { url } from "../../GlobalUrl";
 import Top from "../Top";
 import ScreenTop from "../mobileComp/ScreenTop";
-import BBoxAnnotator from "react-bbox-annotator";
+import BBoxAnnotator, { EntryType } from "react-bbox-annotator";
 import { useHistory } from "react-router";
 import { IoMdArrowRoundBack, FaTimes } from "react-icons/all";
 import { IconButton } from "@material-ui/core";
@@ -11,17 +11,17 @@ import { CgAddR, AiOutlineArrowRight } from "react-icons/all";
 import DocumentDetailsModal from "./DocumentDetailsModal";
 import { Button } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import { useRef } from "react";
 import ClientModal from "./ClientModel5";
-import { Spinner } from "reactstrap";
 
 // import preprocessImage from './Preprocess';
 import Tesseract from "tesseract.js";
+import { data } from "jquery";
 
 // import axios from "axios"
 // import './App.css';
-const UseAsTemplateImage = ({ match }) => {
+const AnnotateImage = ({ match }) => {
   // ---------------split array in two-two parts-------------------------
   function chunkArrayInGroups(arr, size) {
     var result = [];
@@ -39,8 +39,7 @@ const UseAsTemplateImage = ({ match }) => {
   const [docName, setDocName] = useState(null);
   const [modal, setModal] = useState(false);
   const [modaled, setModaled] = useState(false);
-  const [entries, setEntries] = useState([]);
-  const [is_doc_loading, set_doc_loading] = useState(true);
+  const [entry, setEntry] = useState();
   //   changes---
   //   const labels = modaled ? ["V"] : ["L"];
   const [toggleAdvance, settoggleAdvance] = useState(false);
@@ -65,6 +64,7 @@ const UseAsTemplateImage = ({ match }) => {
   const imageRef = useRef(null);
 
   const [docForm, setDocForm] = useState([]);
+  const [summaryField, setSummaryField] = useState([])
 
   const [showClientModal, setShowClientModal] = useState(false);
   const handleClose = () => setShowClientModal(false);
@@ -77,27 +77,6 @@ const UseAsTemplateImage = ({ match }) => {
   //   "dsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
   //   imagePath
   // );
-
-  const handleDocumntContent = (index, event,key) => {
-    const { name, value } = event.target;
-const v=event.target.value
-console.log(v)
-console.log(key)
-    let newArr = [...docForm];
-
-    newArr[index][1] = value;
-
-    setDocForm(newArr);
-    // setDocContents((prevData) => {
-    //   return {
-    //     ...prevData,
-    //     [name]: value,
-    //   };
-    // });
-    // setObjectData({ document_content: JSON.stringify(docContents) });
-    // console.log("OBJECTDATA",objectData)
-  };
-
 
   const handleClick = async () => {
     var formData = new FormData();
@@ -158,7 +137,6 @@ console.log(key)
   const toggle = () => setModal(!modal);
   const toggl = () => setModaled(!modaled);
   async function documentDetailsApi() {
-    set_doc_loading(true);
     await axios
       .get(url + `/api/document/${docId}/`, {
         headers: {
@@ -168,16 +146,15 @@ console.log(key)
       .then((res) => {
         setapiGod(res);
         setImagePath(res.data.file);
+        
+        setSummaryField(res.data.document_content.SummaryFields)
         console.log("res", res);
         setDocForm(Object.entries(res.data.document_content.SummaryFields));
         setDocName(res.data.document_name);
-        set_doc_loading(false);
       })
       .catch((err) => {
         console.log(err);
-        set_doc_loading(false);
       });
-      
   }
 
   useEffect(() => {
@@ -189,6 +166,8 @@ console.log(key)
     let newArr = [...fields];
     newArr[index][1] = event.target.value;
     setFields(newArr);
+    // console.log("MyyyyyyyyyyyyyyFFFFFields",fields[0])
+    alert("Saved")
 
     // docForm.push(fields)
   };
@@ -200,48 +179,6 @@ console.log(key)
     setField(newArr);
     // console.log("fields",field)
   };
-
-
-  async function addAsTemplateApi() {
-    
-    // alert("Add As Template")
-    // console.log("TOOOOKEN:",token)
-    // console.log("DOCID:",docId)
-    await axios
-      .post(
-        url + `/api/document-as-template/`,
-        {
-          
-          "current_document_id": docId
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        console.log("PATCH RESPONSE", res.data);
-        // alert("Form updated successfully");
-        // setMsg("Form updated successfully");
-        toast.success("This Form is Successfully added as Template", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-      })
-      .catch((err) => {
-        console.log("patch req err", err);
-        setMsg("Form Could not add as template");
-      });
-  }
-
-
-
-
-
   async function documentUpdate2Api() {
     // console.log(combineArray);
     // console.log(apiGod.data.document_content.SummaryFields);
@@ -256,14 +193,12 @@ console.log(key)
       arrPush = { ...arrPush, ...result };
     });
     // console.log(arrPush);
-    // alert("Document  2")
     apiGod.data.document_content.SummaryFields = arrPush;
     console.log(apiGod.data.document_content);
-    console.log("ENNNNNNtRIES:",entries)
     await axios
       .patch(
         url + `/api/document/${docId}/`,
-        { document_content: apiGod.data.document_content, document_entries: entries },
+        { document_content: apiGod.data.document_content },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -296,18 +231,18 @@ console.log(key)
     // console.log(JSON.stringify({document_content:formArray , SummaryFields: docForm }))
 
     //     console.log("Apiallhu",JSON.stringify(...myDoc, entries, fields))
-    alert("Document  1")
-
+    
     await axios
       .patch(
         url + `/api/document/${docId}/`,
-        JSON.stringify({ document_content: formArray, SummaryFields: docForm, document_entries: entries }),
+        JSON.stringify({ document_content: formArray, SummaryFields: docForm }),
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
       .then((res) => {
         console.log("PATCH RESPONSE", res);
+        console.log("SAAAAAAAAAAAAAAAAAVE:")
         // alert("Form updated successfully");
         // setMsg("Form updated successfully");
       })
@@ -402,27 +337,9 @@ console.log(key)
         <button onClick={handleClick} style={{height:50}}>Convert to text</button>
       </main>
     </div> */}
-        {is_doc_loading ? (
-          <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "15vw",
-            marginBottom: "15vw",
-          }}
-        >
-          <Spinner
-            animation="border"
-            style={{ fontSize: "20px" }}
-            role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-          <h3 style={{ marginLeft: "20px" }}>Loading...</h3>
-        </div>
-        ) :(
-          <div className="ml-5 mt-2">
-          <div className="mb-4 p-2 shadow border rounded d-flex flex-row align-items-center  mr-5">
+
+        <div className="ml-5 mt-2">
+          <div className="mb-4 p-2 shadow border rounded d-flex flex-row align-items-center justify-content-between mr-5">
             <>
               <IconButton
                 style={{
@@ -435,16 +352,16 @@ console.log(key)
               >
                 <IoMdArrowRoundBack size={30} color="white" />
               </IconButton>
-              <h2>Add as Template</h2>
+              <h2>{docName}</h2>
             </>
-            {/* <IconButton
+            <IconButton
               onClick={() => {
                 toggle();
                 console.log("ioioioio", fields);
               }}
             >
               <CgAddR size={25} color="black" />
-            </IconButton> */}
+            </IconButton>
           </div>
           <Row>
             <div className="d-flex flex-row">
@@ -462,16 +379,24 @@ console.log(key)
                     inputMethod="select"
                     labels={toggleAdvance ? "V" : "L"}
                     // labels={labels}
+                   
                     onChange={(e) => {
                       // setannotatorArray(e)
                       handleshow(e);
-                      // const height = e.map(a => a.height);
-                      // const width = e.map(a => a.width);
-                      // const top =  e.map(a => a.top);
-                      // const left =  e.map(a => a.left);
-                      // const label =  e.map(a => a.label);
-                      
-                      setEntries(e);
+                      const height = e.map(a => a.height);
+                      const width = e.map(a => a.width);
+                      const top =  e.map(a => a.top);
+                      const left =  e.map(a => a.left);
+                      const label =  e.map(a => a.label);
+                      setEntry({
+                        height: height[0],
+                        width: width[0],
+                        top: top[0],
+                        left: left[0],
+                        label: label[0],
+                      })
+                      // console.log("hhhhhhhheight:",result[0].height)
+                      //   setEntries(e);
                     }}
 
                     //  setShowClientModal(prev => !prev)
@@ -481,7 +406,7 @@ console.log(key)
                 </div>
               </div>
 
-              <div className="ml-5 " >
+              <div className="ml-5 ">
                 {fields &&
                   fields.map((f, index) => (
                     <div className="Det_inputField" key={index}>
@@ -530,62 +455,17 @@ console.log(key)
                 )}
               </div>
 
-           </div>
-            <div  className="flex-row" style={{width: '50%'}}>
-                {docForm &&
-                  docForm.map(([key, value], index) => (
-                    <div className="Det_inputField">
-                      <label
-                        style={{ fontWeight: "bold" }}
-                        className="Det_inputLabel d-flex flex-row"
-                      >
-                        <div className="mr-3">{key}</div>
-                      </label>
-                      <Row>
-                        <Col>
-                          <input
-                            style={{
-                              border: "1px solid #e8e8e8",
-                              backgroundColor: "#e8e8e8",
-                              borderRadius: "12px",
-                              fontSize: " 16px",
-                              padding: "10px 14px",
-                              width: "85%",
-                            }}
-                            type="text"
-                            name={value}
-                            value={value}
-                            // key={value}
-                            onChange={(e) => handleDocumntContent(index, e,key)}
-                          ></input>
-                          {/* <IconButton
-                            style={{ marginLeft: "25px" }}
-                            onClick={() =>
-                              setDocForm(
-                                docForm.filter((t) => t[index] !== value)
-                              )
-                            }
-                          >
-                            <FaTimes color="red" />
-                          </IconButton> */}
-                        </Col>
-                      </Row>
-
-
-                      
-                    </div>
-                  ))}
-   <div
+              <div
                 // style={{ width: "40rem" }}
-                className=" "
-                // style={{ marginLeft: "10px", marginRight: "10px" }}
+                className="ml-5 "
+                // style={{ marginLeft: "20px", marginTop: "32px" }}
               >
                 {field &&
                   field.map((f, index) => (
                     <div
                       className="Det_inputField"
                       key={index}
-                      style={{ }}
+                      style={{ width: "25rem" }}
                     >
                       {index % 2 == 0 ? (
                         <label
@@ -603,12 +483,12 @@ console.log(key)
                               borderRadius: "12px",
                               fontSize: " 16px",
                               padding: "10px 14px",
-                              width: "85%",
+                              width: "885%",
                             }}
                             type="text"
                             name={f}
                             value={f}
-                            key={f}
+                            // key={f}
                             onChange={(e) => handleDocument(index, e)}
                           ></input>
 
@@ -653,46 +533,27 @@ console.log(key)
                   ))}
                 {field.length > 1 && (
                   <>
-                  
                     <Button
                       onClick={() => {
                         documentUpdate2Api();
                       }}
-                      className="mt-5"
-                      style={{
-                        marginLeft: '5px',
-                        borderRadius: "12px",
-                        fontSize: " 16px",
-                        padding: "10px 24px",
-                        width: "85%",
-                      }}
+                      className="w-100 mt-5"
                     >
                       Save Changes
                     </Button>
-                  
+                    <div className="w-100 text-center ">
+                      <Button
+                        className=""
+                        style={{ margin: "1rem auto" }}
+                        onClick={() => history.goBack()}
+                      >
+                        Go back
+                      </Button>
+                    </div>
                   </>
                 )}
-                <Button
-                      onClick={() => {
-                        addAsTemplateApi();
-                      }}
-                      className="mt-5"
-                      style={{
-                        marginLeft: '5px',
-                        borderRadius: "12px",
-                        fontSize: " 16px",
-                        padding: "10px 24px",
-                        width: "85%",
-                      }}
-                    >
-                      Add As Template
-                    </Button>
-
-                
               </div>
-              
-           
-                </div>
+            </div>
             {/* <div
                      style={{marginLeft:'200px',marginTop:'40px'}}>
                            
@@ -703,9 +564,6 @@ console.log(key)
                          </div> */}
           </Row>
         </div>
-
-        )}
-        
       </div>
       <DocumentDetailsModal
         toggle={toggle}
@@ -727,4 +585,4 @@ console.log(key)
   );
 };
 
-export default UseAsTemplateImage;
+export default AnnotateImage;

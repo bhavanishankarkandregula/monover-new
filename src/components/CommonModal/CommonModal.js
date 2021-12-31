@@ -20,7 +20,7 @@ const CommonModal = (props) => {
                 </Button>
                 {
                     props.additional &&
-                    <Button color="primary" onClick={() => props.additional()}>
+                    <Button  color="primary" onClick={() => props.additional()}>
                         Cancel
                     </Button>
                 }

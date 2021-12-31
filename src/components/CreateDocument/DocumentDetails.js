@@ -85,18 +85,18 @@ const DocumentDetails = (props) => {
     } else {
       setShowPrevNextButtons(false);
     }
-  });
+  }, [docForm]);
 
 
   async function selectThisTemplate(e) {
     // console.log("Entered select this templateeeeeeeee")
-    
+    // /api/document-as-template/`
     await axios
       .post(
-        url + `/api/document-as-template/`,
+        url + `/api/myurl/`,
         {
-          "is_template_True_id": documentId,
-          "current_document_id": e.value
+          "is_template_True_id": e.value,
+          "current_document_id": documentId
       },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -133,6 +133,24 @@ const DocumentDetails = (props) => {
     getTemplates();
   }, []);
 
+
+  const handlecoulom=(index,key,value)=>{
+    console.log("jjjjjjjj",value)
+    console.log("llllll",key)
+    console.log("ppppp",index)
+  docForm.map((t,i)=>{
+    console.log("oooooo",t,i)
+    if(i==index)
+    {
+      console.log("bb",index)
+  // let days = docForm.splice(index,1);
+  setDocForm(docForm.filter((key, i) => i !== index))
+  // console.log("gggggggggggg",days);
+    }
+  })
+  
+  
+  }
 
   async function documentDetailsApi3() {
     await axios
@@ -534,7 +552,7 @@ const DocumentDetails = (props) => {
     // console.log("arr",arrPush);
    
     apiGod.data.document_content.SummaryFields = arrPush;
-    // console.log(apiGod.data.document_content);
+    console.log("gggggggggggggggggggggggggggggggggggg",apiGod.data.document_content);
     await axios
       .patch(
         url + `/api/document/${documentId}/`,
@@ -786,6 +804,7 @@ const v=event.target.value
         }));
   }
   async function ExportToCSV(index) {
+  //  alert("CSV")
     documentId &&
       (await axios
         .get(`${url}/api/export/${documentId}/${index}/csv/`)
@@ -801,6 +820,7 @@ const v=event.target.value
         }));
   }
   async function ExportToXLS(index) {
+    
     documentId &&
       (await axios
         .get(`${url}/api/export/${documentId}/${index}/xls/`)
@@ -1259,19 +1279,15 @@ const v=event.target.value
                           //  key={value}
                             onChange={(e) => handleDocumntContent(index, e,key)}
                           ></input>
-                          <IconButton
+                           <IconButton
                             style={{ marginLeft: "25px" }}
-                            onClick={() =>{
-
-                              setDocForm(
-                                docForm.filter((t, i) => t[i] !== key)
-                              )
+                            onClick={() =>handlecoulom(index,key,value)
+                          
                             
-                            }
                             }
                           >
                             {/* shankar */}
-                            <FaTimes color="red" />
+                           <FaTimes color="red" />
                           </IconButton>
                         </Col>
                       </Row>

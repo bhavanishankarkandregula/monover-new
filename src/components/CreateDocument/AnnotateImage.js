@@ -17,6 +17,7 @@ import ClientModal from "./ClientModel5";
 
 // import preprocessImage from './Preprocess';
 import Tesseract from "tesseract.js";
+import { data } from "jquery";
 
 // import axios from "axios"
 // import './App.css';
@@ -63,6 +64,7 @@ const AnnotateImage = ({ match }) => {
   const imageRef = useRef(null);
 
   const [docForm, setDocForm] = useState([]);
+  const [summaryField, setSummaryField] = useState([])
 
   const [showClientModal, setShowClientModal] = useState(false);
   const handleClose = () => setShowClientModal(false);
@@ -144,6 +146,8 @@ const AnnotateImage = ({ match }) => {
       .then((res) => {
         setapiGod(res);
         setImagePath(res.data.file);
+        
+        setSummaryField(res.data.document_content.SummaryFields)
         console.log("res", res);
         setDocForm(Object.entries(res.data.document_content.SummaryFields));
         setDocName(res.data.document_name);
@@ -162,7 +166,8 @@ const AnnotateImage = ({ match }) => {
     let newArr = [...fields];
     newArr[index][1] = event.target.value;
     setFields(newArr);
-    alert("Saved")
+    // console.log("MyyyyyyyyyyyyyyFFFFFields",fields[0])
+    // alert("Saved")
 
     // docForm.push(fields)
   };
@@ -170,7 +175,7 @@ const AnnotateImage = ({ match }) => {
   // const [field,setField]=useState([])
   const handleDocument = (index, event) => {
     let newArr = [...field];
-    newArr[index][1] = event.target.value;
+    newArr[index] = event.target.value;
     setField(newArr);
     // console.log("fields",field)
   };
@@ -227,10 +232,24 @@ const AnnotateImage = ({ match }) => {
 
     //     console.log("Apiallhu",JSON.stringify(...myDoc, entries, fields))
 
+    let arrPush = {};
+    fields.map((elem) => {
+      let keysArr = [elem[0]];
+      let valuesArr = [elem[1]];
+      let result = Object.assign.apply(
+        {},
+        keysArr.map((v, i) => ({ [v]: valuesArr[i] }))
+      );
+      arrPush = { ...arrPush, ...result };
+    });
+
+    // alert("Here is the patch")
+    console.log("gggggggggggggggggggggggg", arrPush)
+    //docForm
     await axios
       .patch(
         url + `/api/document/${docId}/`,
-        JSON.stringify({ document_content: formArray, SummaryFields: docForm }),
+        { document_content: formArray, SummaryFields: arrPush },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -349,14 +368,15 @@ const AnnotateImage = ({ match }) => {
               </IconButton>
               <h2>{docName}</h2>
             </>
-            <IconButton
+            <div>&nbsp;</div>
+            {/* <IconButton
               onClick={() => {
                 toggle();
                 console.log("ioioioio", fields);
               }}
             >
               <CgAddR size={25} color="black" />
-            </IconButton>
+            </IconButton> */}
           </div>
           <Row>
             <div className="d-flex flex-row">
@@ -424,7 +444,7 @@ const AnnotateImage = ({ match }) => {
                           type="text"
                           name={f[1]}
                           value={f[1]}
-                          key={f[1]}
+                          // key={f[1]}
                           onChange={(e) => handleDocumentContent(index, e)}
                         ></input>
                         <IconButton
@@ -483,7 +503,7 @@ const AnnotateImage = ({ match }) => {
                             type="text"
                             name={f}
                             value={f}
-                            key={f}
+                            // key={f}
                             onChange={(e) => handleDocument(index, e)}
                           ></input>
 

@@ -53,6 +53,7 @@ const Product = ({ product, getProducts }) => {
   };
 
   const updateProduct = (id) => {
+    console.log("THISFILE:",image)
     var bodyFormData = new FormData();
     bodyFormData.append("name", name);
     bodyFormData.append("product_number", productNumber);
@@ -60,7 +61,7 @@ const Product = ({ product, getProducts }) => {
     bodyFormData.append("price", price);
     bodyFormData.append("files", image);
     fetch(`${url}/api/detailProducts/${id}/`, {
-      method: "PATCH",
+      method: "PUT",
       body: bodyFormData,
     })
       .then((res) => {
