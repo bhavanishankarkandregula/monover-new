@@ -11,10 +11,11 @@ import {
 } from "reactstrap";
 
 const DocumentDetailsModal = (props) => {
-  const [formLabel, setFormLabel] = useState("");
+  const [formLabel, setFormLabel] = useState(props.dataValue);
   // const [formData, setFormData] = useState();
   const [detailsValidator, setdetailsValidator] = useState(false);
-
+        // setDocContents={setField}
+  console.log("DOOOOOCCCONTT:",props.setDocContents)
   function addInput() {
     // console.log("Label", formLabel, "Data", formData);
     if (formLabel) {
@@ -73,7 +74,7 @@ const DocumentDetailsModal = (props) => {
               placeholder="Field Name"
               id="Field"
               name={formLabel}
-              // value={formLabel}
+              value={formLabel}
               onChange={(e) => {
                 setFormLabel(e.target.value);
               }}

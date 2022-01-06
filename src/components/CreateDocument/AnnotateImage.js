@@ -3,7 +3,7 @@ import axios from "axios";
 import { url } from "../../GlobalUrl";
 import Top from "../Top";
 import ScreenTop from "../mobileComp/ScreenTop";
-import BBoxAnnotator, { EntryType } from "react-bbox-annotator";
+import BBoxAnnotator from "react-bbox-annotator";
 import { useHistory } from "react-router";
 import { IoMdArrowRoundBack, FaTimes } from "react-icons/all";
 import { IconButton } from "@material-ui/core";
@@ -38,6 +38,7 @@ const AnnotateImage = ({ match }) => {
   const [imagePath, setImagePath] = useState(null);
   const [docName, setDocName] = useState(null);
   const [modal, setModal] = useState(false);
+  const [modalEntryValue, setModalEntryValue] = useState("")
   const [modaled, setModaled] = useState(false);
   const [entry, setEntry] = useState();
   //   changes---
@@ -65,6 +66,8 @@ const AnnotateImage = ({ match }) => {
 
   const [docForm, setDocForm] = useState([]);
   const [summaryField, setSummaryField] = useState([])
+  const [fieldCounter, setFieldCounter] = useState(0)
+  const [annatorLength, setAnnatorLength] = useState(0)
 
   const [showClientModal, setShowClientModal] = useState(false);
   const handleClose = () => setShowClientModal(false);
@@ -135,7 +138,11 @@ const AnnotateImage = ({ match }) => {
   };
 
   const toggle = () => setModal(!modal);
-  const toggl = () => setModaled(!modaled);
+  const toggl =  () => setModaled(!modaled);
+
+  // const changeEntryValue  = (value) => {
+  //   setModalEntryValue(value)
+  // }
   async function documentDetailsApi() {
     await axios
       .get(url + `/api/document/${docId}/`, {
@@ -304,18 +311,76 @@ const AnnotateImage = ({ match }) => {
 
   //   -------------------------------------------------------------------------------------------
 
-  const handleshow = (e) => {
-    console.log(e);
-    e.map((element) => {
-      if (element.label == "L") {
-        toggl();
-        settoggleAdvance(true);
-      } else if (element.label == "V") {
-        toggl();
-        settoggleAdvance(false);
-      }
-    });
-  };
+  // const handleshow = (e) => {
+    
+  //   // let newArr
+  //   // setField(newArr)
+  //   console.log(e);
+  //   e.map((element) => {
+  //     if (element.label == "L") {
+  //       toggl();
+  //       // alert(element.label)
+  //       // newArr = [...field, element.label];
+  //       settoggleAdvance(true);
+        
+  //     } else if (element.label == "V") {
+  //       // alert(element.label)
+  //       // newArr = [...field, element.label];
+  //       toggl();
+  //       settoggleAdvance(false);
+  //     }
+  //   });
+  // };
+
+  const handleshow = async (e) => {
+    
+    const height = e.map(a => a.height);
+    const width = e.map(a => a.width);
+    const top =  e.map(a => a.top);
+    const left =  e.map(a => a.left);
+    const label =  e.map(a => a.label);
+
+    await axios
+      .post(
+        `${url}/api/get-ocr-value/${docId}/`,
+        {
+          height: height[height.length - 1],
+          width: width[width.length - 1],
+          top: top[top.length - 1],
+          left: left[left.length - 1],
+          label: label[label.length - 1]
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        let newArr;
+        // console.log("res.data.text :", res.data.text)
+        // console.log("res.text :", res.text)
+        if(annatorLength < e.length){
+          if (label[label.length - 1] == "L") {
+            // setFieldCounter(fieldCounter + 1)
+            // newArr = [...field, label[label.length - 1] + fieldCounter];
+            newArr = [...field, res.data.text];
+            setField(newArr)
+            settoggleAdvance(true);
+          } else if (label[label.length - 1] == "V") {
+            // setFieldCounter(fieldCounter + 1)
+            // newArr = [...field, label[label.length - 1] + fieldCounter];
+            newArr = [...field, res.data.text];
+            setField(newArr)
+            settoggleAdvance(false);
+          }
+          setAnnatorLength(e.length)
+        }      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
+  }
   //   -------------------------------------------------------------------------------------------
 
   //   --------------------array 2 properties convert------------------------------------------------------
@@ -398,20 +463,23 @@ const AnnotateImage = ({ match }) => {
                     onChange={(e) => {
                       // setannotatorArray(e)
                       handleshow(e);
-                      const height = e.map(a => a.height);
-                      const width = e.map(a => a.width);
-                      const top =  e.map(a => a.top);
-                      const left =  e.map(a => a.left);
-                      const label =  e.map(a => a.label);
-                      setEntry({
-                        height: height[0],
-                        width: width[0],
-                        top: top[0],
-                        left: left[0],
-                        label: label[0],
-                      })
+                      // const height = e.map(a => a.height);
+                      // const width = e.map(a => a.width);
+                      // const top =  e.map(a => a.top);
+                      // const left =  e.map(a => a.left);
+                      // const label =  e.map(a => a.label);
+                      
+                      // setEntry({
+                      //   height: height[0],
+                      //   width: width[0],
+                      //   top: top[0],
+                      //   left: left[0],
+                      //   label: label[0],
+                      // })
+                      // setModalEntryValue(label[label.length- 1])
+
                       // console.log("hhhhhhhheight:",result[0].height)
-                      //   setEntries(e);
+                        // setEntries(e);
                     }}
 
                     //  setShowClientModal(prev => !prev)
@@ -594,6 +662,7 @@ const AnnotateImage = ({ match }) => {
         documentId={docId}
         docContents={field}
         setDocContents={setField}
+        dataValue={modalEntryValue}
       />
       <ToastContainer newestOnTop style={{ zIndex: "999999999999999999999" }} />
     </>

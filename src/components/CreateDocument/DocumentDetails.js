@@ -161,6 +161,7 @@ const DocumentDetails = (props) => {
       })
       .then((res) => {
         setapiGod(res);
+        console.log("GOOODIIIDDDAAATTAA:", res)
         // used_template_id
         // alert(res.data.used_template_id)
       })
