@@ -1221,7 +1221,8 @@ const v=event.target.value
           >
 
 
-              {/* <div className="flex-column">
+            // tableExists, tableHeads, tableRows
+              <div className="flex-column">
                 {tableExists && (
                   <table border="1"  width="100%">
                     <tr>
@@ -1240,14 +1241,14 @@ const v=event.target.value
                   </table>
                 )
                 }
-              </div> */}
-                {/*  shankar2  */}
 
+                /* shankar2 */
+              </div>
 
 
             <div className="Details_Form">
               <div>
-                {/* {formArray &&
+                {formArray &&
                   formArray.map((p) => (
                     <div className="Det_inputField">
                       <div className="d-flex justify-content-between">
@@ -1310,7 +1311,7 @@ const v=event.target.value
                         </Col>
                       </Row>
                     </div>
-                  ))} */}
+                  ))}
                 {docForm &&
                   docForm.map(([key, value], index) => (
                     <div className="Det_inputField">
